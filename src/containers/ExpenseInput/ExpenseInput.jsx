@@ -1,4 +1,4 @@
-import { addExpense } from "store/expense/expense-slice";
+import { addExpense, removeList } from "store/expense/expense-slice";
 import s from "./style.module.css";
 import { useDispatch } from "react-redux";
 
@@ -10,7 +10,13 @@ export function ExpenseInput(props) {
         const formData = new FormData(e.currentTarget);
         const name = formData.get("name");
         const price = formData.get("price");
-        dispatch(addExpense({ name, price }));
+        name != "" && price != ""
+            ? dispatch(addExpense({ name, price }))
+            : alert("erreur");
+    }
+
+    function remove() {
+        dispatch(removeList());
     }
 
     return (
@@ -40,6 +46,15 @@ export function ExpenseInput(props) {
                         className={`btn btn-primary ${s.btn}`}
                     >
                         Add
+                    </button>
+                </div>
+                <div className="col-12 col-sm-2 col-md-4 col-lg-4 mb-2">
+                    <button
+                        type="button"
+                        onClick={remove}
+                        className={`btn btn-primary ${s.btn}`}
+                    >
+                        Delete
                     </button>
                 </div>
             </div>
